@@ -1,0 +1,109 @@
+<template>
+    <li>
+        <div class='slds-timeline__item_expandable slds-timeline__item_email' data-id={toggleEmailId}>
+            <span class="slds-assistive-text">email</span>
+            <div class="slds-media">
+                <div class="slds-media__figure">
+                    <button class="slds-button slds-button_icon" title="Toggle details" data-activity="email"
+                        data-id={emailId} aria-controls="email-item-narrow-65" aria-expanded="false"
+                        onclick={toggleDetails}>
+                        <svg class="slds-button__icon slds-timeline__details-action-icon" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>
+                        <span class="slds-assistive-text">Toggle details</span>
+                    </button>
+                    <div class="slds-icon_container slds-icon-standard-email slds-timeline__icon" title="Email">
+                        <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                            <use xlink:href="/_slds/icons/standard-sprite/svg/symbols.svg#email"></use>
+                        </svg>
+                    </div>
+                </div>
+                <div class="slds-media__body">
+                    <div class="slds-grid slds-grid_align-spread slds-timeline__trigger">
+                        <div class="slds-grid slds-grid_vertical-align-center slds-truncate_container_75 slds-no-space">
+                            <h3 class="slds-truncate" title="Open email">
+                                <template if:true={subject}>
+                                    <a href={emailURL}>
+                                        {subject}
+                                    </a>
+                                </template>
+                                <template if:false={subject}>
+                                    <a href={emailURL}>
+                                        No Subject
+                                    </a>
+                                </template>
+                            </h3>
+                        </div>
+                        <div class="slds-timeline__actions slds-timeline__actions_inline">
+                            <template if:true={date}>
+                                <p class="slds-timeline__date">{hours} | {date}</p>
+                            </template>
+                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click" data-dropdown-id={emailId}>
+                                <button
+                                    class="slds-button slds-button_icon slds-button_icon-x-small slds-button_icon-border-filled"
+                                    aria-haspopup="true" aria-expanded="true" onclick={closeOpenDropdown}
+                                    data-dropdown={emailId} title="Show More">
+                                    <svg class="slds-button__icon" aria-hidden="true">
+                                        <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#down"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">Show More</span>
+                                </button>
+                                <div class="slds-dropdown slds-dropdown_right slds-dropdown_actions">
+                                    <ul class="slds-dropdown__list" role="menu" aria-label="Show More">
+                                        <li class="slds-dropdown__item" role="presentation">
+                                            <a href="#" role="menuitem" tabindex="-1" onclick={handleDelete}>
+                                                <span class="slds-truncate" title="Action Two">Delete</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="slds-m-horizontal_xx-small">
+                        Email <template if:true={fromAddress}>
+                            from <a href={fromAddress}>{fromAddress} </a>
+                        </template>
+                        <template if:true={toAddress}>
+                            to <a href={toAddress}>{toAddress}.</a>
+                        </template>
+                    </p>
+                    <article
+                        class="slds-box slds-timeline__item_details slds-theme_shade slds-m-top_x-small slds-m-horizontal_xx-small slds-p-around_medium"
+                        id="email-item-narrow-65" aria-hidden="true">
+                        <ul class="slds-list_horizontal slds-wrap">
+                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
+                                <span class="slds-text-title slds-p-bottom_x-small">From Address</span>
+                                <template if:true={fromAddress}>
+                                    <span class="slds-text-body_medium slds-truncate" title="From Address email">
+                                        <a href={fromAddress}>{fromAddress}</a>
+                                    </span>
+                                </template>
+                            </li>
+                            <li class="slds-grid slds-grid_vertical slds-size_1-of-2 slds-p-bottom_small">
+                                <span class="slds-text-title slds-p-bottom_x-small">To Address</span>
+                                <span class="slds-text-body_medium slds-truncate" title="To Address email">
+                                    <a href={toAddress}>{toAddress}</a>
+                                </span>
+                            </li>
+                        </ul>
+                        <div>
+                            <span class="slds-text-title">Email Content</span>
+                            <template if:true={textBody}>
+                                <p class="slds-p-top_x-small">{textBody}</p>
+                            </template>
+                            <template if:false={textBody}>
+                                <p class="slds-p-top_x-small">No content to display</p>
+                            </template>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </li>
+    <template if:true={openModal}>
+        <c-modal-view onclose={hideModalBox} onsave={updateRecord} activity-fields={emailFields}
+            close-modal={hideModalBox}>
+        </c-modal-view>
+    </template>
+</template>

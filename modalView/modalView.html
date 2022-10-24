@@ -1,0 +1,65 @@
+<template>
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true"
+        aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+            <!-- modal header start -->
+            <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close"
+                    onclick={closing}>
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small">
+                    </lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+                <template if:true={activityFields.edit}>
+                    <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Edit record</h2>
+                </template>
+                <template if:true={activityFields.delete}>
+                    <h2 id="modal-heading-02" class="slds-text-heading_medium slds-hyphenate">Delete record</h2>
+                </template>
+            </header>
+
+            <!-- modal body start -->
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-grid slds-wrap slds-gutters">
+                    <template if:true={activityFields.edit}>
+                        <template for:each={activityFields.fields} for:item="field">
+                            <template if:true={field.text}>
+                                <div class="slds-col slds-size_1-of-2 " key={field.Subject}>
+                                    <lightning-input type={field.type} name={field.name} label={field.label}
+                                        onchange={handleInput} value={field.value}>
+                                    </lightning-input>
+                                </div>
+                            </template>
+                            <template if:true={field.textarea}>
+                                <div class="slds-col slds-size_2-of-2 " key={field.Subject}>
+                                    <lightning-textarea type={field.type} name={field.name} label={field.label}
+                                        onchange={handleInput} value={field.value}>
+                                    </lightning-textarea>
+                                </div>
+                            </template>
+                            <template if:true={field.picklist}>
+                                <div class="slds-col slds-size_1-of-2 " key={field.Subject}>
+                                    <lightning-combobox type={field.type} name={field.name} label={field.label}
+                                        onchange={handleInput} value={field.value} options={field.options}>
+                                    </lightning-combobox>
+                                </div>
+                            </template>
+
+                        </template>
+                    </template>
+                    <template if:true={activityFields.delete}>
+                        <p class="slds-align_absolute-center">Are you sure you want to delete the following item ?</p>
+                    </template>
+                </div>
+            </div>
+
+            <!-- modal footer start-->
+            <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral" onclick={closing}>Cancel</button>
+                <button class="slds-button slds-button_neutral" onclick={save}>Save</button>
+            </footer>
+
+        </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+</template>

@@ -1,0 +1,69 @@
+<template>
+    <lightning-card title="Activities related to Leads">
+        <ul class="slds-timeline">
+            <div class="slds-section slds-is-open" data-id='upcoming'>
+                <h3 class="slds-section__title">
+                    <button aria-controls="upcoming-overdue" aria-expanded="true"
+                        class="slds-button slds-section__title-action" data-id='upcoming' onclick={handleSection}>
+                        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                            aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>
+                        <span class="slds-truncate" title="Section Title">Upcoming & Overdue</span>
+                    </button>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content" id="upcoming-overdue">
+                    <template for:each={tasksUpComing} for:item="task">
+                        <c-task-activity key={task.Id} task={task} onupdate={handleUpdate} ondelete={handleDelete}
+                            toggle-details={toggleDetails}>
+                        </c-task-activity>
+                    </template>
+                    <template for:each={eventsUpComing} for:item="event">
+                        <c-event-activity key={event.Id} event={event} toggle-details={toggleDetails}
+                            onupdate={handleUpdate} ondelete={handleDelete}>
+                        </c-event-activity>
+                    </template>
+                    <template if:false={hasUpcomingActivity}>
+                        <p class="slds-align_absolute-center">No activities to show</p>
+                    </template>
+                </div>
+            </div>
+            <div class="slds-section slds-is-open" data-id='completed'>
+                <h3 class="slds-section__title">
+                    <button aria-controls="completed" aria-expanded="true"
+                        class="slds-button slds-section__title-action" data-id='completed' onclick={handleSection}>
+                        <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left"
+                            aria-hidden="true">
+                            <use xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                        </svg>
+                        <span class="slds-truncate" title="Section Title">Completed</span>
+                    </button>
+                </h3>
+                <div aria-hidden="false" class="slds-section__content" id="completed">
+                    <template for:each={tasks} for:item="task">
+                        <c-task-activity key={task.Id} task={task} onupdate={handleUpdate} ondelete={handleDelete}
+                            toggle-details={toggleDetails}>
+                        </c-task-activity>
+                    </template>
+                    <template for:each={calls} for:item="call">
+                        <c-call-activity key={call.Id} call={call} toggle-details={toggleDetails}
+                            onupdate={handleUpdate} ondelete={handleDelete}></c-call-activity>
+                    </template>
+                    <template for:each={events} for:item="event">
+                        <c-event-activity key={event.Id} event={event} toggle-details={toggleDetails}
+                            onupdate={handleUpdate} ondelete={handleDelete}>
+                        </c-event-activity>
+                    </template>
+                    <template for:each={emails} for:item="email">
+                        <c-email-activity key={email.Id} email={email} toggle-details={toggleDetails}
+                            ondelete={handleDelete}>
+                        </c-email-activity>
+                    </template>
+                    <template if:false={hasCompletedActivities}>
+                        <p class="slds-align_absolute-center">No activities to show</p>
+                    </template>
+                </div>
+            </div>
+        </ul>
+    </lightning-card>
+</template>
